@@ -476,17 +476,17 @@ export class RizinInstance {
     let truncated = false;
 
     if (output.length > maxOutputBytes) {
-      output = `${output.slice(0, maxOutputBytes)}\n[output truncated at ${formatBytes(maxOutputBytes)}]`;
+      output = `${output.slice(0, maxOutputBytes)}\n[${formatBytes(maxOutputBytes)}에서 출력 잘림]`;
       truncated = true;
 
       if (!options.suppressNotice) {
-        const label = options.commandLabel || 'Command output';
+        const label = options.commandLabel || '명령어 출력';
         const limitLabel = formatBytes(maxOutputBytes);
         this.emitNotice({
           severity: 'error',
           code: 'output-truncated',
-          message: `${label} exceeded ${limitLabel} and was truncated.`,
-          detail: 'Increase Max Output Size in Settings for larger binaries or verbose commands.',
+          message: `${label}이(가) ${limitLabel}을(를) 초과하여 잘렸습니다.`,
+          detail: '더 큰 바이너리나 상세 명령어의 경우 설정에서 최대 출력 크기를 늘리세요.',
         });
       }
     }
@@ -514,7 +514,7 @@ export class RizinInstance {
         this.emitNotice({
           severity: 'error',
           code: 'native-command-failed',
-          message: options.commandLabel || 'Command execution failed.',
+          message: options.commandLabel || '명령어 실행 실패.',
           detail: detail || (error instanceof Error ? error.message : String(error)),
         });
       }
@@ -556,8 +556,8 @@ export class RizinInstance {
       this.emitNotice({
         severity: 'warning',
         code: 'native-session-unavailable',
-        message: 'Persistent native session is unavailable. Falling back to compatibility mode.',
-        detail: 'Disassembly and graph views still work, but switching functions will stay slower until the rzweb session API opens successfully.',
+        message: '영구 네이티브 세션을 사용할 수 없습니다. 호환 모드로 전환합니다.',
+        detail: '디스어셈블리와 그래프 뷰는 정상 작동하지만, 함수 전환이 느려질 수 있습니다.',
       });
       return false;
     }
@@ -574,8 +574,8 @@ export class RizinInstance {
       this.emitNotice({
         severity: 'warning',
         code: 'native-session-open-failed',
-        message: 'Persistent native session could not open this binary. Falling back to command invocations.',
-        detail: detail || 'The WebAssembly module does not expose the native session API yet.',
+        message: '영구 네이티브 세션이 이 바이너리를 열 수 없습니다. 명령어 호출로 대체합니다.',
+        detail: detail || 'WebAssembly 모듈이 아직 네이티브 세션 API를 제공하지 않습니다.',
       });
       this.nativeApi = null;
       this.nativeSessionId = null;
@@ -584,7 +584,7 @@ export class RizinInstance {
 
     this.runNativeCommand(
       'e scr.color=0;e scr.interactive=false;e scr.prompt=false;e scr.utf8=false;e scr.utf8.curvy=false;e log.level=0;e scr.pager=',
-      { context: 'metadata', commandLabel: 'Native bootstrap', suppressNotice: true }
+      { context: 'metadata', commandLabel: '네이티브 부트스트랩', suppressNotice: true }
     );
 
     return true;
@@ -828,7 +828,7 @@ export class RizinInstance {
 
     const result = this.runSessionCommand('?*j', {
       context: 'metadata',
-      commandLabel: 'Command catalog',
+      commandLabel: '명령어 카탈로그',
       maxOutputBytes: Math.max(this.runtimeConfig.maxOutputBytes, 4 * 1024 * 1024),
       suppressNotice: true,
     });
@@ -966,16 +966,16 @@ export class RizinInstance {
 
       if (capture?.truncated) {
         const limitLabel = formatBytes(maxOutputBytes);
-        const suffix = `[output truncated at ${limitLabel}]`;
+        const suffix = `[${formatBytes(maxOutputBytes)}에서 출력 잘림]`;
         this.stdoutBuffer.push(suffix);
 
         if (!options.suppressNotice) {
-          const label = options.commandLabel || 'Command output';
+          const label = options.commandLabel || '명령어 출력';
           this.emitNotice({
             severity: 'error',
             code: 'output-truncated',
-            message: `${label} exceeded ${limitLabel} and was truncated.`,
-            detail: 'Increase Max Output Size in Settings for larger binaries or verbose commands.',
+            message: `${label}이(가) ${limitLabel}을(를) 초과하여 잘렸습니다.`,
+            detail: '더 큰 바이너리나 상세 명령어의 경우 설정에서 최대 출력 크기를 늘리세요.',
           });
         }
       }
@@ -983,7 +983,7 @@ export class RizinInstance {
 
     return {
       output: this.stdoutBuffer.join('\n'),
-      truncated: this.stdoutBuffer.includes(`[output truncated at ${formatBytes(maxOutputBytes)}]`),
+      truncated: this.stdoutBuffer.includes(`[${formatBytes(maxOutputBytes)}에서 출력 잘림]`),
       durationMs: Date.now() - startedAt,
     };
   }
@@ -1318,8 +1318,8 @@ export class RizinInstance {
       this.emitNotice({
         severity: 'error',
         code: 'metadata-unavailable',
-        message: `${label} could not be fully loaded within the current output limit.`,
-        detail: 'Increase Max Output Size in Settings and reopen the binary to index this view completely.',
+        message: `${label}을(를) 현재 출력 제한 내에 완전히 로드할 수 없습니다.`,
+        detail: '설정에서 최대 출력 크기를 늘리고 바이너리를 다시 열어 이 뷰를 완전히 인덱싱하세요.',
       });
     }
 
@@ -1353,8 +1353,8 @@ export class RizinInstance {
     let truncated = false;
 
     const sections: Array<{ key: string; commands: string[]; label: string }> = [
-      { key: 'overview', commands: ['ij'], label: 'Binary overview' },
-      { key: 'binaryInfo', commands: ['iIj'], label: 'Binary info' },
+      { key: 'overview', commands: ['ij'], label: '바이너리 개요' },
+      { key: 'binaryInfo', commands: ['iIj'], label: '바이너리 정보' },
       { key: 'entries', commands: ['iej'], label: 'Entrypoints' },
       { key: 'initFini', commands: ['ieej'], label: 'Init/Fini' },
       { key: 'headerFields', commands: ['ihj'], label: 'Header fields' },
@@ -1429,16 +1429,16 @@ export class RizinInstance {
     const loadPromise = (async () => {
       this.currentAddress = hexAddress;
 
-      const disasmResult = this.runFunctionDetailCommand(`s ${hexAddress};pdfj`, 'Function disassembly');
+      const disasmResult = this.runFunctionDetailCommand(`s ${hexAddress};pdfj`, '함수 디스어셈블리');
       const disasm = this.parseJSON(disasmResult.output);
 
       let graph = this.parseJSON(
-        this.runFunctionDetailCommand(`s ${hexAddress};agfj`, 'Function graph').output
+        this.runFunctionDetailCommand(`s ${hexAddress};agfj`, '함수 그래프').output
       );
 
       if (graph == null) {
         graph = this.parseJSON(
-          this.runFunctionDetailCommand(`s ${hexAddress};agf json`, 'Function graph').output
+          this.runFunctionDetailCommand(`s ${hexAddress};agf json`, '함수 그래프').output
         );
       }
 
@@ -1481,14 +1481,14 @@ export class RizinInstance {
     const output = this.hasNativeSession()
       ? this.runNativeCommand('s', {
           context: 'metadata',
-          commandLabel: 'Current seek',
+          commandLabel: '현재 위치',
           suppressNotice: true,
           maxOutputBytes: 1024,
         }).output
       : this.filePath
         ? this.runCommand('s', this.filePath, {
             context: 'metadata',
-            commandLabel: 'Current seek',
+            commandLabel: '현재 위치',
             suppressNotice: true,
             maxOutputBytes: 1024,
           }).output
@@ -1520,7 +1520,7 @@ export class RizinInstance {
       const result = this.loadArrayIntoAnalysis(
         'functions',
         functionCommands,
-        'Functions'
+        '함수'
       );
       changed = changed || result.loaded;
       truncated = truncated || result.truncated;
@@ -1528,28 +1528,28 @@ export class RizinInstance {
     }
 
     if (plan.refreshStrings) {
-      const result = this.loadArrayIntoAnalysis('strings', ['izzj', 'izj'], 'Strings');
+      const result = this.loadArrayIntoAnalysis('strings', ['izzj', 'izj'], '문자열');
       changed = changed || result.loaded;
       truncated = truncated || result.truncated;
       await this.yield();
     }
 
     if (plan.refreshImports) {
-      const result = this.loadArrayIntoAnalysis('imports', ['iij'], 'Imports');
+      const result = this.loadArrayIntoAnalysis('imports', ['iij'], '임포트');
       changed = changed || result.loaded;
       truncated = truncated || result.truncated;
       await this.yield();
     }
 
     if (plan.refreshExports) {
-      const result = this.loadArrayIntoAnalysis('exports', ['iEj'], 'Exports');
+      const result = this.loadArrayIntoAnalysis('exports', ['iEj'], '익스포트');
       changed = changed || result.loaded;
       truncated = truncated || result.truncated;
       await this.yield();
     }
 
     if (plan.refreshSections) {
-      const result = this.loadArrayIntoAnalysis('sections', ['iSj'], 'Sections');
+      const result = this.loadArrayIntoAnalysis('sections', ['iSj'], '섹션');
       changed = changed || result.loaded;
       truncated = truncated || result.truncated;
       await this.yield();
@@ -1686,8 +1686,8 @@ export class RizinInstance {
       this.emitNotice({
         severity: 'error',
         code: 'large-binary',
-        message: `Large binary detected (${formatBytes(file.data.length)}). Initial analysis is being front-loaded on open.`,
-        detail: 'This avoids empty sidebars and repeated aa; ... chaining, but browser/WASM analysis may still take longer on bigger files.',
+        message: `대용량 바이너리 감지됨 (${formatBytes(file.data.length)}). 열 때 초기 분석이 미리 실행됩니다.`,
+        detail: '빈 사이드바와 반복적인 aa; ... 체이닝을 피하지만, 더 큰 파일에서는 브라우저/WASM 분석이 여전히 오래 걸릴 수 있습니다.',
       });
     }
 
@@ -1696,7 +1696,7 @@ export class RizinInstance {
     if (nativeSessionReady && !this.runtimeConfig.noAnalysis) {
       const analysisResult = this.runNativeCommand(this.getConfiguredAnalysisCommand(), {
         context: 'analysis',
-        commandLabel: 'Initial analysis',
+        commandLabel: '초기 분석',
         suppressNotice: true,
       });
       truncated = truncated || analysisResult.truncated;
@@ -1706,7 +1706,7 @@ export class RizinInstance {
       const functionsResult = this.loadArrayIntoAnalysis(
         'functions',
         [`${this.getConfiguredAnalysisCommand()};aflj`],
-        'Functions'
+        '함수'
       );
       truncated = truncated || functionsResult.truncated;
       this.analysisCompleted = true;
@@ -1714,8 +1714,8 @@ export class RizinInstance {
         this.emitNotice({
           severity: 'warning',
           code: 'functions-unavailable',
-          message: 'Function analysis did not populate during startup.',
-          detail: 'The binary is open, but function indexing could not be parsed from the current WASM run.',
+          message: '시작 중 함수 분석이 완료되지 않았습니다.',
+          detail: '바이너리는 열려 있지만, 현재 WASM 실행에서 함수 인덱싱을 파싱할 수 없습니다.',
         });
       }
       await this.yield();
@@ -1723,7 +1723,7 @@ export class RizinInstance {
       this.emitNotice({
         severity: 'warning',
         code: 'auto-analysis-disabled',
-        message: 'Auto-analysis is disabled. Function and graph views stay empty until you run aa, aaa, or aaaa.',
+        message: '자동 분석이 비활성화되어 있습니다. 함수 및 그래프 뷰를 보려면 aa, aaa, 또는 aaaa를 실행하세요.',
       });
     }
 
@@ -1746,7 +1746,7 @@ export class RizinInstance {
 
   async executeCommand(command: string): Promise<string> {
     if (!this._isOpen || !this.file) {
-      return 'Error: No file loaded';
+      return '오류: 로드된 파일 없음';
     }
 
     return new Promise<string>((resolve, reject) => {
@@ -1776,7 +1776,7 @@ export class RizinInstance {
 
         const result = this.runSessionCommand(finalCmd, {
           context: 'command',
-          commandLabel: 'Command output',
+          commandLabel: '명령어 출력',
         });
 
         this.updateCurrentAddressFromCommand(finalCmd);

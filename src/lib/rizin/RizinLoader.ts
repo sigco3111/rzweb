@@ -56,7 +56,7 @@ export async function loadRizinModule(
   };
 
   if (cachedModule) {
-    notify('ready', 100, 'Rizin loaded from cache');
+    notify('ready', 100, 'Rizin이 캐시에서 로드됨');
     return cachedModule;
   }
 
@@ -66,7 +66,7 @@ export async function loadRizinModule(
 
   loadingPromise = (async () => {
     try {
-      notify('initializing', 5, 'Loading Rizin module...');
+      notify('initializing', 5, 'Rizin 모듈 로딩 중...');
 
       const modulePromise = new Promise<RizinModule>((resolve, reject) => {
         const stdoutBuffer: number[] = [];
@@ -145,12 +145,12 @@ export async function loadRizinModule(
             mod?._printErrHandler?.(text);
           },
           onRuntimeInitialized: () => {
-            notify('ready', 100, 'Rizin ready');
+            notify('ready', 100, 'Rizin 준비 완료');
             cachedModule = (window as unknown as { Module: RizinModule }).Module;
             resolve(cachedModule);
           },
           onAbort: (msg: string) => {
-            reject(new Error(`Rizin module aborted: ${msg}`));
+            reject(new Error(`Rizin 모듈 중단됨: ${msg}`));
           },
         };
 
@@ -162,14 +162,14 @@ export async function loadRizinModule(
         script.crossOrigin = 'anonymous';
         
         script.onload = () => {
-          notify('processing', 50, 'Initializing Rizin...');
+          notify('processing', 50, 'Rizin 초기화 중...');
         };
         
         script.onerror = () => {
-          reject(new Error('Failed to load rizin.js'));
+          reject(new Error('rizin.js 로드 실패'));
         };
 
-        notify('downloading', 20, 'Downloading Rizin...');
+        notify('downloading', 20, 'Rizin 다운로드 중...');
         document.head.appendChild(script);
       });
 

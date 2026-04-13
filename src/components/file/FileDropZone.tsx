@@ -28,7 +28,7 @@ export function FileDropZone({
       setError(null);
 
       if (file.size > maxSize) {
-        setError(`File too large. Maximum size is ${formatSize(maxSize)}`);
+        setError(`파일이 너무 큽니다. 최대 크기는 ${formatSize(maxSize)}입니다.`);
         return;
       }
 
@@ -90,7 +90,7 @@ export function FileDropZone({
           accept={accept}
           onChange={handleInputChange}
           className="absolute inset-0 cursor-pointer opacity-0"
-          aria-label="File upload"
+          aria-label="파일 업로드"
         />
 
         <Upload
@@ -101,11 +101,11 @@ export function FileDropZone({
         />
 
         <p className="mb-2 text-center text-muted-foreground">
-          <span className="font-medium text-foreground">Click to upload</span>
-          {' '}or drag and drop
+          <span className="font-medium text-foreground">클릭하여 업로드</span>
+          {' '}또는 드래그 앤 드롭
         </p>
         <p className="text-sm text-muted-foreground/60">
-          Binary files up to {formatSize(maxSize)}
+          최대 {formatSize(maxSize)}의 바이너리 파일
         </p>
       </div>
 
@@ -130,7 +130,7 @@ export function FileDropZone({
             <button
               onClick={onClear}
               className="rounded-full p-1 hover:bg-muted"
-              aria-label="Clear file"
+              aria-label="파일 지우기"
             >
               <X className="h-5 w-5 text-muted-foreground" />
             </button>

@@ -53,7 +53,7 @@ export function ExportsView({ exports: exportsList, onNavigate, className }: Exp
         <Search className="h-3.5 w-3.5 text-muted-foreground" />
         <input
           type="text"
-          placeholder="Filter exports..."
+          placeholder="내보내기 필터링..."
           value={filter}
           onChange={e => setFilter(e.target.value)}
           className="flex-1 bg-transparent text-sm outline-none placeholder:text-muted-foreground/50"
@@ -94,7 +94,7 @@ export function ExportsView({ exports: exportsList, onNavigate, className }: Exp
 
       {exportsList.length === 0 && (
         <div className="flex-1 flex items-center justify-center text-sm text-muted-foreground">
-          No exports found
+          내보내기를 찾을 수 없습니다
         </div>
       )}
     </div>

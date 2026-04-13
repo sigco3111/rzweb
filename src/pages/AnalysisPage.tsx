@@ -125,7 +125,7 @@ export default function AnalysisPage() {
         rz = new RizinInstance(rizinModule);
         setLoadPhase('analyzing');
         setLoadProgress(78);
-        setLoadMessage(noAnalysis ? 'Opening binary without auto-analysis...' : 'Running initial analysis and indexing binary data...');
+        setLoadMessage(noAnalysis ? '자동 분석 없이 바이너리 열기...' : '초기 분석 및 바이너리 데이터 인덱싱 중...');
         await rz.open(currentFile, {
           ioCache,
           analysisDepth,
@@ -144,16 +144,16 @@ export default function AnalysisPage() {
         setAlerts(rz.allNotices);
         setLoadPhase('ready');
         if (rz.cacheHit) {
-          toast.success('Loaded from analysis cache');
+          toast.success('분석 캐시에서 로드됨');
         } else {
-          toast.success(noAnalysis ? 'Binary opened' : 'Analysis complete');
+          toast.success(noAnalysis ? '바이너리 열림' : '분석 완료');
         }
 
       } catch (error) {
         console.error('Failed to load Rizin:', error);
         setError(String(error));
         setLoadPhase('error');
-        toast.error(`Failed to load Rizin: ${error}`);
+        toast.error(`Rizin 로드 실패: ${error}`);
       } finally {
         setLoading(false);
       }
@@ -344,12 +344,12 @@ export default function AnalysisPage() {
           <TerminalIcon className="h-16 w-16 animate-pulse text-primary" />
         </div>
         <h2 className="mb-2 text-2xl font-semibold text-foreground">
-          {loadPhase === 'downloading' ? 'Downloading Rizin...' : loadPhase === 'analyzing' ? 'Analyzing Binary...' : 'Initializing...'}
+          {loadPhase === 'downloading' ? 'Rizin 다운로드 중...' : loadPhase === 'analyzing' ? '바이너리 분석 중...' : '초기화 중...'}
         </h2>
         <p className="mb-6 max-w-md text-center text-muted-foreground">
           {loadPhase === 'analyzing'
-            ? 'Initial analysis is being completed now so functions, strings, sections, and graphs are ready without manual aa; ... chaining.'
-            : 'Please wait'}
+            ? '함수, 문자열, 섹션, 그래프가 수동 aa 체이닝 없이 즉시 사용 가능하도록 초기 분석을 완료하고 있습니다.'
+            : '잠시 기다려 주세요'}
         </p>
         <div className="w-80"><Progress value={loadProgress} showValue /></div>
       </div>
@@ -364,7 +364,7 @@ export default function AnalysisPage() {
             <Button variant="ghost" size="icon-sm" onClick={() => setSidebarOpen(!sidebarOpen)}>
               {sidebarOpen ? <X className="h-4 w-4" /> : <Menu className="h-4 w-4" />}
             </Button>
-            <Button variant="ghost" size="icon-sm" onClick={handleGoHome} title="Back to Home">
+            <Button variant="ghost" size="icon-sm" onClick={handleGoHome} title="홈으로">
               <Home className="h-4 w-4" />
             </Button>
             <div className="hidden items-center gap-2 sm:flex">
@@ -385,10 +385,10 @@ export default function AnalysisPage() {
           )}
 
           <div className="ml-auto flex shrink-0 items-center gap-1 sm:gap-2">
-            <Button variant="ghost" size="icon-sm" onClick={() => setSettingsDialogOpen(true)} title="Settings">
+            <Button variant="ghost" size="icon-sm" onClick={() => setSettingsDialogOpen(true)} title="설정">
               <Settings className="h-4 w-4" />
             </Button>
-            <Button variant="ghost" size="icon-sm" onClick={handleGoHome} title="Exit">
+            <Button variant="ghost" size="icon-sm" onClick={handleGoHome} title="종료">
               <X className="h-4 w-4 text-destructive" />
             </Button>
           </div>
@@ -399,31 +399,31 @@ export default function AnalysisPage() {
             <div className="overflow-x-auto scrollbar-hidden">
               <TabsList className="h-9 min-w-max justify-start bg-muted/50">
                 <TabsTrigger value="terminal" className="gap-1 px-2 text-xs sm:gap-1.5 sm:px-3">
-                  <TerminalIcon className="h-3.5 w-3.5" /><span>Terminal</span>
+                  <TerminalIcon className="h-3.5 w-3.5" /><span>터미널</span>
                 </TabsTrigger>
                 <TabsTrigger value="disasm" className="gap-1 px-2 text-xs sm:gap-1.5 sm:px-3">
-                  <Code className="h-3.5 w-3.5" /><span>Disasm</span>
+                  <Code className="h-3.5 w-3.5" /><span>디스어셈</span>
                 </TabsTrigger>
                 <TabsTrigger value="hex" className="gap-1 px-2 text-xs sm:gap-1.5 sm:px-3">
-                  <Layout className="h-3.5 w-3.5" /><span>Hex</span>
+                  <Layout className="h-3.5 w-3.5" /><span>헥스</span>
                 </TabsTrigger>
                 <TabsTrigger value="strings" className="gap-1 px-2 text-xs sm:gap-1.5 sm:px-3">
-                  <Quote className="h-3.5 w-3.5" /><span>Strings</span>
+                  <Quote className="h-3.5 w-3.5" /><span>문자열</span>
                 </TabsTrigger>
                 <TabsTrigger value="graph" className="gap-1 px-2 text-xs sm:gap-1.5 sm:px-3">
-                  <Share2 className="h-3.5 w-3.5" /><span>Graph</span>
+                  <Share2 className="h-3.5 w-3.5" /><span>그래프</span>
                 </TabsTrigger>
                 <TabsTrigger value="imports" className="gap-1 px-2 text-xs sm:gap-1.5 sm:px-3">
-                  <Package className="h-3.5 w-3.5" /><span>Imports</span>
+                  <Package className="h-3.5 w-3.5" /><span>임포트</span>
                 </TabsTrigger>
                 <TabsTrigger value="exports" className="gap-1 px-2 text-xs sm:gap-1.5 sm:px-3">
-                  <ArrowUpRight className="h-3.5 w-3.5" /><span>Exports</span>
+                  <ArrowUpRight className="h-3.5 w-3.5" /><span>익스포트</span>
                 </TabsTrigger>
                 <TabsTrigger value="sections" className="gap-1 px-2 text-xs sm:gap-1.5 sm:px-3">
-                  <Layers className="h-3.5 w-3.5" /><span>Sections</span>
+                  <Layers className="h-3.5 w-3.5" /><span>섹션</span>
                 </TabsTrigger>
                 <TabsTrigger value="info" className="gap-1 px-2 text-xs sm:gap-1.5 sm:px-3">
-                  <Info className="h-3.5 w-3.5" /><span>Info</span>
+                  <Info className="h-3.5 w-3.5" /><span>정보</span>
                 </TabsTrigger>
               </TabsList>
             </div>
@@ -483,14 +483,14 @@ export default function AnalysisPage() {
                 <div className="h-full">
                   {isLoadingDisasm ? (
                     <div className="flex h-full items-center justify-center text-muted-foreground">
-                      Loading disassembly...
+                      디스어셈블리 로딩 중...
                     </div>
                   ) : disasmLines.length > 0 ? (
                     <DisassemblyView lines={disasmLines} onNavigate={setCurrentAddress} />
                   ) : (
                     <div className="flex h-full flex-col items-center justify-center text-muted-foreground gap-4">
                       <Code className="h-12 w-12 opacity-30" />
-                      <p>Select a function from the sidebar to view disassembly</p>
+                      <p>사이드바에서 함수를 선택하여 디스어셈블리 보기</p>
                     </div>
                   )}
                 </div>
@@ -512,7 +512,7 @@ export default function AnalysisPage() {
           <div className="flex flex-wrap items-center gap-x-4 gap-y-1">
           <div className="flex items-center gap-1.5">
             <div className={cn("h-2 w-2 rounded-full", activeInstance ? "bg-green-500" : "bg-muted")} />
-            {activeInstance ? "Ready" : "Loading"}
+            {activeInstance ? "준비됨" : "로딩 중"}
           </div>
           <div className="tabular-nums">0x{currentAddress.toString(16).padStart(8, '0')}</div>
           {selectedFunction && <div className="text-primary">{selectedFunction}</div>}

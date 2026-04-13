@@ -129,10 +129,10 @@ export function GraphView({ nodes, edges, className }: GraphViewProps) {
       <div className={cn('flex flex-col h-full w-full items-center justify-center bg-background text-muted-foreground gap-4', className)}>
         <Share2 className="h-12 w-12 opacity-30" />
         <div className="text-center space-y-2">
-          <p className="text-sm">No graph data available</p>
+          <p className="text-sm">그래프 데이터가 없습니다</p>
           <p className="text-xs opacity-70">
-            Select a function from the sidebar to view its control flow graph.
-            Graph feature requires function analysis.
+            사이드바에서 함수를 선택하여 제어 흐름 그래프를 확인하세요.
+            그래프 기능은 함수 분석이 필요합니다.
           </p>
         </div>
       </div>
@@ -158,7 +158,7 @@ export function GraphView({ nodes, edges, className }: GraphViewProps) {
       <div className="absolute top-4 left-4 p-2 bg-background/80 backdrop-blur rounded-md border border-border shadow-sm">
         <h3 className="text-xs font-semibold flex items-center gap-2">
           <Share2 className="h-3 w-3 text-primary" />
-          Control Flow Graph
+          제어 흐름 그래프
         </h3>
       </div>
     </div>

@@ -185,9 +185,9 @@ export const RizinTerminal = forwardRef<RizinTerminalRef, RizinTerminalProps>(
                 const nextPage = page + 1;
                 term.writeln('');
                 term.writeln('\x1b[36m------------------------------------------------------------\x1b[0m');
-                term.writeln(`\x1b[1;36m  Page ${nextPage}/${totalPages}  \x1b[0m|\x1b[33m  Lines ${start + 1}-${end} of ${totalLines}  \x1b[0m|\x1b[32m  ${remaining} more lines  \x1b[0m`);
+                term.writeln(`\x1b[1;36m  페이지 ${nextPage}/${totalPages}  \x1b[0m|\x1b[33m  줄 ${start + 1}-${end} / ${totalLines}줄  \x1b[0m|\x1b[32m  ${remaining}줄 남음  \x1b[0m`);
                 term.writeln('\x1b[36m------------------------------------------------------------\x1b[0m');
-                term.writeln('\x1b[35m  [m]\x1b[0m Show more  |  \x1b[35m[a]\x1b[0m Show all  |  \x1b[35m[Enter]\x1b[0m Continue to prompt');
+                term.writeln('\x1b[35m  [m]\x1b[0m 더 보기  |  \x1b[35m[a]\x1b[0m 전체 보기  |  \x1b[35m[Enter]\x1b[0m 프롬프트로 계속');
                 term.writeln('\x1b[36m------------------------------------------------------------\x1b[0m');
 
                 (term as any)._paginationState = {
@@ -204,7 +204,7 @@ export const RizinTerminal = forwardRef<RizinTerminalRef, RizinTerminalProps>(
 
                     const renderChunk = () => {
                       if (currentIdx >= totalLines) {
-                        term.writeln(`\x1b[36m-- End of output (${totalLines} total lines) --\x1b[0m`);
+                        term.writeln(`\x1b[36m-- 출력 끝 (총 ${totalLines}줄) --\x1b[0m`);
                         (term as any)._paginationState = null;
                         (term as any)._renderingAll = false;
                         return;
@@ -217,19 +217,19 @@ export const RizinTerminal = forwardRef<RizinTerminalRef, RizinTerminalProps>(
                       currentIdx = chunkEnd;
 
                       if (currentIdx % 500 === 0 && currentIdx < totalLines) {
-                        term.writeln(`\x1b[90m... rendered ${currentIdx}/${totalLines} lines (press q to stop) ...\x1b[0m`);
+                        term.writeln(`\x1b[90m... ${currentIdx}/${totalLines}줄 렌더링됨 (중지하려면 q를 누르세요) ...\x1b[0m`);
                       }
 
                       requestAnimationFrame(renderChunk);
                     };
 
                     term.writeln('');
-                    term.writeln(`\x1b[32mRendering all ${totalLines - end} remaining lines...\x1b[0m`);
+                    term.writeln(`\x1b[32m남은 ${totalLines - end}줄 모두 렌더링 중...\x1b[0m`);
                     requestAnimationFrame(renderChunk);
                   },
                 };
               } else {
-                term.writeln(`\x1b[36m-- End of output (${totalLines} total lines) --\x1b[0m`);
+                term.writeln(`\x1b[36m-- 출력 끝 (총 ${totalLines}줄) --\x1b[0m`);
                 (term as any)._paginationState = null;
               }
             };
@@ -238,7 +238,7 @@ export const RizinTerminal = forwardRef<RizinTerminalRef, RizinTerminalProps>(
           }
         }
       } catch (error) {
-        term.writeln(`\x1b[31mError: ${error}\x1b[0m`);
+        term.writeln(`\x1b[31m오류: ${error}\x1b[0m`);
       }
     }, []);
 
@@ -461,11 +461,11 @@ export const RizinTerminal = forwardRef<RizinTerminalRef, RizinTerminalProps>(
       searchAddonRef.current = searchAddon;
 
       term.writeln('\x1b[1;36m============================================================\x1b[0m');
-      term.writeln('\x1b[1;36m|\x1b[0m          \x1b[1;37mRzWeb - Rizin Web Interface\x1b[0m                      \x1b[1;36m|\x1b[0m');
-      term.writeln('\x1b[1;36m|\x1b[0m          Browser-based reverse engineering                \x1b[1;36m|\x1b[0m');
+      term.writeln('\x1b[1;36m|\x1b[0m          \x1b[1;37mRzWeb - Rizin 웹 인터페이스\x1b[0m                      \x1b[1;36m|\x1b[0m');
+      term.writeln('\x1b[1;36m|\x1b[0m          브라우저 기반 리버스 엔지니어링                   \x1b[1;36m|\x1b[0m');
       term.writeln('\x1b[1;36m============================================================\x1b[0m');
       term.writeln('');
-      term.writeln('\x1b[33mWaiting for Rizin...\x1b[0m');
+      term.writeln('\x1b[33mRizin 로딩 대기 중...\x1b[0m');
 
       onReady?.();
 
@@ -493,16 +493,15 @@ export const RizinTerminal = forwardRef<RizinTerminalRef, RizinTerminalProps>(
       if (connectedRef.current === rizin) return;
       connectedRef.current = rizin;
 
-      term.writeln('\x1b[32mConnected to Rizin!\x1b[0m');
-      term.writeln(`\x1b[90mFile: ${rizin.currentFile?.name || 'unknown'}\x1b[0m`);
+      term.writeln('\x1b[32mRizin에 연결되었습니다!\x1b[0m');
+      term.writeln(`\x1b[90m파일: ${rizin.currentFile?.name || '알 수 없음'}\x1b[0m`);
 
       const analysis = rizin.analysis;
       if (analysis) {
-        term.writeln(`\x1b[90mFunctions: ${analysis.functions.length}, Strings: ${analysis.strings.length}\x1b[0m`);
+        term.writeln(`\x1b[90m함수: ${analysis.functions.length}, 문자열: ${analysis.strings.length}\x1b[0m`);
       }
 
-      term.writeln('\x1b[90mType commands. Try: "afl", "iz", "pdf @ main", "?"\x1b[0m');
-      term.writeln('');
+      term.writeln('\x1b[90m명령어를 입력하세요. 예: "afl", "iz", "pdf @ main", "?"\x1b[0m');
 
       showPrompt();
 
@@ -736,8 +735,8 @@ export const RizinTerminal = forwardRef<RizinTerminalRef, RizinTerminalProps>(
         {autocompleteState.visible && (
           <div className="absolute bottom-3 left-3 z-10 max-w-[min(40rem,calc(100%-1.5rem))] overflow-hidden rounded-md border border-sky-500/30 bg-slate-950/95 shadow-2xl backdrop-blur-sm">
             <div className="flex items-center justify-between gap-4 border-b border-slate-800 px-3 py-2 text-[10px] font-mono uppercase tracking-wide text-slate-400">
-              <span>Autocomplete</span>
-              <span>{autocompleteState.suggestions.length} matches</span>
+              <span>자동완성</span>
+              <span>{autocompleteState.suggestions.length}개 일치</span>
             </div>
             <div className="max-h-72 overflow-auto">
               {autocompleteState.suggestions.map((suggestion, index) => {

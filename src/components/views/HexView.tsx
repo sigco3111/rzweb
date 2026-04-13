@@ -156,16 +156,16 @@ export function HexView({ data, offset, className }: HexViewProps) {
     <div className={cn('flex flex-col h-full bg-background font-mono overflow-hidden', className)}>
       <header className="flex h-9 items-center border-b border-border bg-muted/30 px-3 gap-3 shrink-0">
         <span className="text-[10px] font-medium text-muted-foreground whitespace-nowrap">
-          {data.length.toLocaleString()} bytes • {totalRows.toLocaleString()} rows
+          {data.length.toLocaleString()} 바이트 • {totalRows.toLocaleString()} 행
         </span>
         <span className="text-[10px] text-muted-foreground">
-          Row {Math.floor(scrollTop / ROW_HEIGHT) + 1}
+          {Math.floor(scrollTop / ROW_HEIGHT) + 1}행
         </span>
         <div className="flex gap-1">
-          <button onClick={jumpToStart} className="p-1 hover:bg-accent rounded" title="Jump to start">
+          <button onClick={jumpToStart} className="p-1 hover:bg-accent rounded" title="처음으로 이동">
             <ChevronUp className="h-3 w-3" />
           </button>
-          <button onClick={jumpToEnd} className="p-1 hover:bg-accent rounded" title="Jump to end">
+          <button onClick={jumpToEnd} className="p-1 hover:bg-accent rounded" title="끝으로 이동">
             <ChevronDown className="h-3 w-3" />
           </button>
         </div>
@@ -173,7 +173,7 @@ export function HexView({ data, offset, className }: HexViewProps) {
         <div className="relative flex items-center gap-1">
           <Search className="absolute left-2 h-3 w-3 text-muted-foreground" />
           <Input
-            placeholder="Hex or ASCII..."
+            placeholder="Hex 또는 ASCII..."
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
             onKeyDown={(e) => e.key === 'Enter' && handleSearch()}
@@ -196,7 +196,7 @@ export function HexView({ data, offset, className }: HexViewProps) {
       </header>
 
       <header className="flex h-6 items-center border-b border-border bg-muted/20 px-3 text-[9px] font-medium text-muted-foreground uppercase tracking-wider shrink-0">
-        <div className="w-20">Offset</div>
+        <div className="w-20">오프셋</div>
         <div className="flex-1 text-center">Hex</div>
         <div className="w-36 text-center border-l border-border pl-2">ASCII</div>
       </header>
@@ -267,8 +267,8 @@ export function HexView({ data, offset, className }: HexViewProps) {
       </div>
 
       <footer className="flex h-5 items-center justify-between border-t border-border bg-muted/20 px-3 text-[9px] text-muted-foreground shrink-0">
-        <span>Viewing {visibleRowCount} of {totalRows.toLocaleString()} rows</span>
-        <span>Current: 0x{currentAddress.toString(16).toUpperCase()}</span>
+        <span>{visibleRowCount} / {totalRows.toLocaleString()} 행 표시 중</span>
+        <span>현재: 0x{currentAddress.toString(16).toUpperCase()}</span>
       </footer>
     </div>
   );

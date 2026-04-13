@@ -60,7 +60,7 @@ export default function HomePage() {
         useCache: cacheVersions,
       });
     } catch {
-      toast.error('Unable to open the selected binary.');
+      toast.error('선택한 바이너리를 열 수 없습니다.');
     } finally {
       setIsProcessing(false);
     }
@@ -71,13 +71,13 @@ export default function HomePage() {
     try {
       const cached = await getCachedAnalysisEntry(hash);
       if (!cached) {
-        toast.error('That cached analysis is no longer available.');
+        toast.error('해당 캐시 분석 데이터를 더 이상 사용할 수 없습니다.');
         setCachedEntries(await listCachedAnalyses());
         return;
       }
 
       if (!(cached.binaryData instanceof Uint8Array) || cached.binaryData.byteLength === 0) {
-        toast.error('This older cache entry only has parsed metadata. Analyze the binary one more time to make it directly reopenable from Home.');
+        toast.error('이전 캐시 항목에는 파싱된 메타데이터만 포함되어 있습니다. 홈에서 바로 다시 열 수 있도록 바이너리를 한 번 더 분석하세요.');
         return;
       }
 
@@ -88,7 +88,7 @@ export default function HomePage() {
         useCache: true,
       });
     } catch {
-      toast.error('Unable to reopen the cached binary right now.');
+      toast.error('캐시된 바이너리를 지금 다시 열 수 없습니다.');
     } finally {
       setOpeningCachedHash(null);
     }
@@ -131,11 +131,11 @@ export default function HomePage() {
  |_| \\_\\___|   \\_/\\_/ \\___|_.__/ `}
             </pre>
             <p className="mt-4 text-sm font-mono text-foreground/80">
-              Browser-Based Reverse Engineering
+              브라우저 기반 리버스 엔지니어링
             </p>
             <p className="mx-auto mt-2 max-w-md text-xs font-mono text-muted-foreground">
-              Analyze binaries directly in your browser. No uploads, no servers.
-              Powered by Rizin compiled to WebAssembly.
+              브라우저에서 바이너리를 직접 분석하세요. 업로드 없이, 서버 없이.
+              WebAssembly로 컴파일된 Rizin 기반.
             </p>
           </div>
 
@@ -154,14 +154,14 @@ export default function HomePage() {
                   onChange={(event) => setCacheVersions(event.target.checked)}
                   className="h-3 w-3 rounded border-border"
                 />
-                Cache offline
+                오프라인 캐시
               </label>
               <Button
                 onClick={handleOpenRizin}
                 disabled={!file || isProcessing}
                 loading={isProcessing}
               >
-                Analyze
+                분석
               </Button>
             </div>
           </div>
@@ -169,24 +169,24 @@ export default function HomePage() {
           <div className="mt-4 grid grid-cols-3 gap-2 sm:mt-6 sm:gap-4">
             <div className="flex items-center gap-2 text-xs font-mono text-muted-foreground">
               <Cpu className="h-4 w-4 text-primary" />
-              <span>WASM Powered</span>
+              <span>WASM 구동</span>
             </div>
             <div className="flex items-center gap-2 text-xs font-mono text-muted-foreground">
               <Lock className="h-4 w-4 text-primary" />
-              <span>100% Private</span>
+              <span>100% 프라이빗</span>
             </div>
             <div className="flex items-center gap-2 text-xs font-mono text-muted-foreground">
               <Code2 className="h-4 w-4 text-primary" />
-              <span>Full CLI Access</span>
+              <span>전체 CLI 접근</span>
             </div>
           </div>
 
           {cachedEntries.length > 0 && (
             <div className="mt-6 rounded border border-border bg-card/50 p-3">
               <div className="mb-2 flex items-center justify-between gap-3">
-                <p className="text-[10px] font-mono text-muted-foreground">OFFLINE CACHE:</p>
+                <p className="text-[10px] font-mono text-muted-foreground">오프라인 캐시:</p>
                 <p className="text-[10px] font-mono text-muted-foreground">
-                  Click a cached filename to reopen instantly
+                  캐시된 파일을 클릭하여 즉시 다시 열기
                 </p>
               </div>
               <div className="space-y-2">
@@ -205,11 +205,11 @@ export default function HomePage() {
                         <div className="mt-1 flex flex-wrap items-center gap-2 text-[10px] font-mono text-muted-foreground">
                           <span>{formatSize(entry.fileSize)}</span>
                           <span>{formatHash(entry.hash)}</span>
-                          <span>{entry.hasBinaryData ? 'launchable' : 'metadata only'}</span>
+                          <span>{entry.hasBinaryData ? '실행 가능' : '메타데이터만'}</span>
                         </div>
                       </div>
                       <div className="shrink-0 text-[10px] font-mono text-primary">
-                        {isOpening ? 'Opening...' : entry.hasBinaryData ? 'Open' : 'Rebuild'}
+                        {isOpening ? '여는 중...' : entry.hasBinaryData ? '열기' : '재분석'}
                       </div>
                     </button>
                   );
@@ -220,7 +220,7 @@ export default function HomePage() {
 
           {recentFiles.length > 0 && (
             <div className="mt-4 rounded border border-border bg-card/50 p-3">
-              <p className="mb-2 text-[10px] font-mono text-muted-foreground">RECENT:</p>
+              <p className="mb-2 text-[10px] font-mono text-muted-foreground">최근:</p>
               <div className="space-y-1">
                 {recentFiles.slice(0, 3).map((recentFile) => (
                   <div key={`${recentFile.name}-${recentFile.loadedAt}`} className="flex justify-between text-xs font-mono">
@@ -237,14 +237,7 @@ export default function HomePage() {
       <footer className="border-t border-border bg-card px-4 py-3 sm:px-6">
         <div className="flex items-center justify-center gap-4 text-[10px] font-mono text-muted-foreground">
           <span>
-            by{' '}
-            <a href="https://github.com/IndAlok" target="_blank" rel="noopener noreferrer" className="text-primary hover:underline">
-              IndAlok
-            </a>
-          </span>
-          <span className="text-border">|</span>
-          <span>
-            powered by{' '}
+            제작:{' '}
             <a href="https://rizin.re" target="_blank" rel="noopener noreferrer" className="hover:text-primary">
               Rizin
             </a>

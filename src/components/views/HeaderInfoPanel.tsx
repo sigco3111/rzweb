@@ -48,7 +48,7 @@ function formatValue(
 ): string {
   const compactAddresses = options.compactAddresses ?? false;
 
-  if (typeof value === 'boolean') return value ? 'Yes' : 'No';
+  if (typeof value === 'boolean') return value ? '예' : '아니오';
   if (typeof value === 'number') {
     if (isAddressKey(key)) return formatAddressValue(value, bits, compactAddresses);
     if (isSizeKey(key) && value > 0) return `${formatSize(value)} (${value})`;
@@ -63,7 +63,7 @@ function formatValue(
     );
     return primitiveItems
       ? value.map(item => formatValue(key, item, bits, options)).join(', ')
-      : `${value.length.toLocaleString()} items`;
+      : `${value.length.toLocaleString()} 항목`;
   }
   if (value && typeof value === 'object') {
     const record = asRecord(value);
@@ -75,7 +75,7 @@ function formatValue(
     );
     return primitiveRecord
       ? JSON.stringify(record, null, 2)
-      : `${Object.keys(record).length.toLocaleString()} fields`;
+      : `${Object.keys(record).length.toLocaleString()} 필드`;
   }
   return String(value);
 }
@@ -157,7 +157,7 @@ function ArraySection({
           {title}
         </h4>
         <span className="rounded bg-muted px-2 py-0.5 text-[10px] text-muted-foreground">
-          {items.length.toLocaleString()} items
+          {items.length.toLocaleString()} 항목
         </span>
       </div>
 
@@ -240,7 +240,7 @@ export function HeaderInfoPanel({ info, fileSize, className }: HeaderInfoPanelPr
   if (!root && !Object.keys(bin).length) {
     return (
       <div className={cn('flex h-full items-center justify-center text-sm text-muted-foreground', className)}>
-        No binary info available
+        바이너리 정보를 사용할 수 없습니다
       </div>
     );
   }
@@ -249,13 +249,13 @@ export function HeaderInfoPanel({ info, fileSize, className }: HeaderInfoPanelPr
     <div className={cn('flex h-full flex-col overflow-auto', className)}>
       <div className="flex items-center gap-2 border-b border-border bg-muted/30 px-3 py-2">
         <Info className="h-3.5 w-3.5 text-muted-foreground" />
-        <span className="text-sm font-medium">Binary Info</span>
+        <span className="text-sm font-medium">바이너리 정보</span>
       </div>
 
       <div className="space-y-6 p-4">
         {Object.keys(core).length > 0 && (
           <InfoSection
-            title="Core"
+            title="코어"
             data={{ ...core, ...(fileSize ? { uploadedFileSize: fileSize } : {}) }}
             bits={bits}
           />
@@ -263,14 +263,14 @@ export function HeaderInfoPanel({ info, fileSize, className }: HeaderInfoPanelPr
 
         {Object.keys(bin).length > 0 && (
           <InfoSection
-            title="Binary"
+            title="바이너리"
             data={Object.fromEntries(Object.entries(bin).filter(([key]) => key !== 'checksums'))}
             bits={bits}
           />
         )}
 
         {Object.keys(summaryData).length > 0 && (
-          <InfoSection title="Summary" data={summaryData} bits={bits} />
+          <InfoSection title="요약" data={summaryData} bits={bits} />
         )}
 
         {Object.keys(bin).length > 0 && (
@@ -278,7 +278,7 @@ export function HeaderInfoPanel({ info, fileSize, className }: HeaderInfoPanelPr
             <h4 className="mb-2 text-xs font-semibold uppercase tracking-wider text-muted-foreground">
               <div className="flex items-center gap-1.5">
                 <Shield className="h-3.5 w-3.5" />
-                Security
+                보안
               </div>
             </h4>
             <div className="flex flex-wrap gap-2">
@@ -289,7 +289,7 @@ export function HeaderInfoPanel({ info, fileSize, className }: HeaderInfoPanelPr
           </section>
         )}
 
-        {checksums && <InfoSection title="Checksums" data={checksums} bits={bits} />}
+        {checksums && <InfoSection title="체크섬" data={checksums} bits={bits} />}
 
         {extraObjectSections.map(([key, value]) => (
           <InfoSection key={key} title={prettyLabel(key)} data={value} bits={bits} />

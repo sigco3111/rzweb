@@ -22,16 +22,16 @@ export function DisassemblyView({ lines, onNavigate, className }: DisassemblyVie
   return (
     <div className={cn('flex flex-col h-full bg-background font-mono overflow-hidden', className)}>
       <header className="flex h-8 items-center border-b border-border bg-muted/30 px-4 text-[10px] font-medium text-muted-foreground uppercase tracking-wider shrink-0">
-        <div className="w-24">Address</div>
-        <div className="w-16">Bytes</div>
-        <div className="flex-1 px-2">Instruction</div>
+        <div className="w-24">주소</div>
+        <div className="w-16">바이트</div>
+        <div className="flex-1 px-2">명령어</div>
       </header>
       
       <ScrollArea className="flex-1">
         <div className="py-2" ref={scrollRef}>
           {lines.length === 0 ? (
             <div className="flex h-32 items-center justify-center text-muted-foreground italic text-sm">
-              No disassembly data loaded
+              디스어셈블리 데이터가 로드되지 않았습니다
             </div>
           ) : (
             lines.map((line) => (

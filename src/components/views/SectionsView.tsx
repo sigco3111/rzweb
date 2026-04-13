@@ -39,7 +39,7 @@ export function SectionsView({ sections, onNavigate, className }: SectionsViewPr
     <div className={cn('flex flex-col h-full', className)}>
       <div className="flex items-center gap-2 px-3 py-2 border-b border-border bg-muted/30">
         <Layers className="h-3.5 w-3.5 text-muted-foreground" />
-        <span className="text-sm font-medium">Sections</span>
+        <span className="text-sm font-medium">섹션</span>
         <span className="text-xs text-muted-foreground ml-auto">{sections.length}</span>
       </div>
 
@@ -47,11 +47,11 @@ export function SectionsView({ sections, onNavigate, className }: SectionsViewPr
         <table className="w-full text-xs">
           <thead className="sticky top-0 bg-muted/80 backdrop-blur-sm">
             <tr className="border-b border-border">
-              <th className="text-left px-3 py-2 font-medium text-muted-foreground">Name</th>
+              <th className="text-left px-3 py-2 font-medium text-muted-foreground">이름</th>
               <th className="text-left px-3 py-2 font-medium text-muted-foreground">VAddr</th>
-              <th className="text-left px-3 py-2 font-medium text-muted-foreground">Size</th>
-              <th className="text-left px-3 py-2 font-medium text-muted-foreground">Perm</th>
-              <th className="text-left px-3 py-2 font-medium text-muted-foreground w-32">Usage</th>
+              <th className="text-left px-3 py-2 font-medium text-muted-foreground">크기</th>
+              <th className="text-left px-3 py-2 font-medium text-muted-foreground">권한</th>
+              <th className="text-left px-3 py-2 font-medium text-muted-foreground w-32">사용량</th>
             </tr>
           </thead>
           <tbody>
@@ -83,7 +83,7 @@ export function SectionsView({ sections, onNavigate, className }: SectionsViewPr
 
         {sections.length === 0 && (
           <div className="flex items-center justify-center h-32 text-sm text-muted-foreground">
-            No sections found
+            섹션을 찾을 수 없습니다
           </div>
         )}
       </div>

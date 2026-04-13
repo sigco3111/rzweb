@@ -53,7 +53,7 @@ export function ImportsView({ imports, onNavigate, className }: ImportsViewProps
         <Search className="h-3.5 w-3.5 text-muted-foreground" />
         <input
           type="text"
-          placeholder="Filter imports..."
+          placeholder="임포트 필터링..."
           value={filter}
           onChange={e => setFilter(e.target.value)}
           className="flex-1 bg-transparent text-sm outline-none placeholder:text-muted-foreground/50"
@@ -92,7 +92,7 @@ export function ImportsView({ imports, onNavigate, className }: ImportsViewProps
 
       {imports.length === 0 && (
         <div className="flex-1 flex items-center justify-center text-sm text-muted-foreground">
-          No imports found
+          임포트를 찾을 수 없습니다
         </div>
       )}
     </div>

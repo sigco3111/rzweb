@@ -73,9 +73,9 @@ export function FunctionsView({ functions, onSelect, className }: FunctionsViewP
   const handleFunctionClick = useCallback((fcn: RzFunction) => {
     if (!fcn.name) return;
     navigator.clipboard.writeText(fcn.name).then(() => {
-      toast.success(`Copied: ${fcn.name}`, { duration: 1500 });
+      toast.success(`복사됨: ${fcn.name}`, { duration: 1500 });
     }).catch(() => {
-      toast.error('Failed to copy');
+      toast.error('복사 실패');
     });
     onSelect?.(fcn);
   }, [onSelect]);
@@ -94,16 +94,16 @@ export function FunctionsView({ functions, onSelect, className }: FunctionsViewP
         <div className="flex items-center justify-between">
           <h3 className="text-sm font-semibold flex items-center gap-2">
             <Box className="h-4 w-4 text-primary" />
-            Functions
+            함수
             <Badge variant="secondary" className="ml-1 px-1.5 py-0 h-4 text-[10px]">
               {filteredFunctions.length.toLocaleString()}{filter && ` / ${validFunctions.length.toLocaleString()}`}
             </Badge>
           </h3>
           <div className="flex gap-1">
-            <button onClick={jumpToStart} className="p-1 hover:bg-accent rounded" title="Jump to start">
+            <button onClick={jumpToStart} className="p-1 hover:bg-accent rounded" title="처음으로 이동">
               <ChevronUp className="h-3 w-3" />
             </button>
-            <button onClick={jumpToEnd} className="p-1 hover:bg-accent rounded" title="Jump to end">
+            <button onClick={jumpToEnd} className="p-1 hover:bg-accent rounded" title="끝으로 이동">
               <ChevronDown className="h-3 w-3" />
             </button>
           </div>
@@ -111,7 +111,7 @@ export function FunctionsView({ functions, onSelect, className }: FunctionsViewP
         <div className="relative">
           <Search className="absolute left-2.5 top-2.5 h-3.5 w-3.5 text-muted-foreground" />
           <Input
-            placeholder="Search functions..."
+            placeholder="함수 검색..."
             value={filter}
             onChange={(e) => setFilter(e.target.value)}
             className="pl-8 h-8 text-xs"
@@ -145,7 +145,7 @@ export function FunctionsView({ functions, onSelect, className }: FunctionsViewP
             >
               <div className="flex items-center justify-between w-full gap-2">
                 <span className="text-sm font-medium truncate flex-1">
-                  {fcn.name || '<unnamed>'}
+                  {fcn.name || '<이름 없음>'}
                 </span>
                 <span className={cn(
                   "text-[10px] tabular-nums",
@@ -167,7 +167,7 @@ export function FunctionsView({ functions, onSelect, className }: FunctionsViewP
                     "text-[10px]",
                     selectedFunction === fcn.name ? "text-primary-foreground/60" : "text-muted-foreground"
                   )}>
-                    {fcn.nbbs} blocks
+                    {fcn.nbbs} 블록
                   </span>
                 )}
               </div>
@@ -178,13 +178,13 @@ export function FunctionsView({ functions, onSelect, className }: FunctionsViewP
 
       {filteredFunctions.length === 0 && (
         <div className="p-8 text-center text-sm text-muted-foreground italic">
-          {filter ? 'No functions match filter' : 'No functions found'}
+          {filter ? '필터와 일치하는 함수가 없습니다' : '함수를 찾을 수 없습니다'}
         </div>
       )}
 
       <footer className="flex h-5 items-center justify-between border-t border-border bg-muted/20 px-3 text-[9px] text-muted-foreground shrink-0">
-        <span>Viewing {Math.min(endRow - startRow, totalRows)} of {totalRows.toLocaleString()}</span>
-        <span>Row {Math.floor(scrollTop / ROW_HEIGHT) + 1}</span>
+        <span>{Math.min(endRow - startRow, totalRows)} / {totalRows.toLocaleString()} 표시 중</span>
+        <span>{Math.floor(scrollTop / ROW_HEIGHT) + 1}행</span>
       </footer>
     </div>
   );
