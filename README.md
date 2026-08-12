@@ -6,7 +6,7 @@ Rizin을 WebAssembly로 컴파일하여 구동하는 브라우저 기반 리버�
 >
 > 본 저장소는 원본 rzweb을 한국어로 번역한 포크입니다.
 >
-> **배포 주소:** https://rzweb-temp.vercel.app
+> **배포 주소:** https://sigco3111.github.io/rzweb
 
 ## 스크린샷
 
