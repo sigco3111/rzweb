@@ -6,7 +6,11 @@ Rizin을 WebAssembly로 컴파일하여 구동하는 브라우저 기반 리버�
 >
 > 본 저장소는 원본 rzweb을 한국어로 번역한 포크입니다.
 >
-> **배포 주소:** https://sigco3111.github.io/rzweb
+라이브 데모 : https://sigco3111.github.io/rzweb/
+
+[![Live Demo](https://img.shields.io/badge/Live_Demo-GitHub%20Pages-222222?style=for-the-badge&logo=githubpages&logoColor=white)](https://sigco3111.github.io/rzweb/)
+
+> 📦 **호스팅 메모**: 과거에는 Vercel에 배포되었으며, 2026-08에 GitHub Pages로 전환되었습니다. `vercel.json`은 Vercel 배포 이력 보존 + COOP/COEP 헤더 차원에서 그대로 유지합니다 (Pages 동작에는 무해).
 
 ## 스크린샷
 
