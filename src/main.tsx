@@ -6,7 +6,7 @@ import { ErrorBoundary } from 'react-error-boundary';
 
 import { ThemeProvider, ToastProvider } from '@/providers';
 import { TooltipProvider } from '@/components/ui';
-import { HomePage, AnalysisPage } from '@/pages';
+import { HomePage, AnalysisPage, NotFoundPage } from '@/pages';
 import { Button } from '@/components/ui';
 
 import './index.css';
@@ -29,6 +29,10 @@ const router = createBrowserRouter([
   {
     path: '/analyze',
     element: <AnalysisPage />,
+  },
+  {
+    path: '*',
+    element: <NotFoundPage />,
   },
 ]);
 
