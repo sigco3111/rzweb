@@ -34,7 +34,9 @@ const router = createBrowserRouter([
     path: '*',
     element: <NotFoundPage />,
   },
-]);
+], {
+  basename: '/rzweb',
+});
 
 function ErrorFallback({
   error,
